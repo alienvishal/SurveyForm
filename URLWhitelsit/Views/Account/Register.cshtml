@@ -1,0 +1,50 @@
+﻿@model LoginViewModel
+@{
+    ViewBag.Title = "Register";
+}
+
+<h2>Survey of Outgoing Internet Traffic</h2>
+
+<form method="post" asp-antiforgery="true" id="frm_submit">
+    <div class="form-horizontal">
+        <hr />
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="form-group">
+            <label class="control-label col-md-2" asp-for="SelectedInstance">Instance-ID<span style="color:red">*</span></label>
+            <div class="col-md-10">
+                <select asp-for="SelectedInstance" asp-items="@(new SelectList(ViewBag.ProjectInstance, "Project_Id", "ProjectName"))" id="multipleSelectDropDownList"></select>
+                <span class="field-validation-valid text-danger" asp-validation-for="SelectedInstance"></span>
+            </div>
+            <br /><br /><br />
+            <label class="control-label col-md-2" asp-for="Email">Daimler Email Address<span style="color:red">*</span></label>
+            <div class="col-md-10">
+                <input autocomplete="off" class="form-control" asp-for="Email" />
+                <span class="text-danger" asp-validation-for="Email"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button type="submit" class="new-btn">
+                    <i class="fa fa-spinner fa-spin" style="display:none;"></i>Register
+                </button>
+                <br /><br />
+                Already Register? <a asp-action="Login" asp-controller="Account">Click to Login</a>
+            </div>
+        </div>
+    </div>
+
+</form>
+
+@section Scripts{
+    <script type="text/javascript">
+        $(function () {
+            $('#multipleSelectDropDownList').chosen({
+                width: "25%"
+            });
+        })
+
+        $('#frm_submit').submit(function () {
+            $('.fa.fa-spinner.fa-spin').show();
+        })
+    </script>
+}
