@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@inject UserManager<Users> userManager
+@inject SignInManager<Users> signInManager
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -81,7 +83,7 @@
     </script>
 </head>
 <body>
-    @{ 
+    @{
         string controller = (string)ViewContext.RouteData.Values["controller"];
         string action = (string)ViewContext.RouteData.Values["action"];
     }
@@ -90,8 +92,22 @@
             <img src="~/images/loader_gif.gif" alt="loader" />
         </div>
     </div>
-    
-    <div class="sidebar">
+
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">eXtollo Survey Form</a>
+            </div>
+            <ul class="nav navbar-nav navbar-right">
+                @if(signInManager.IsSignedIn(User))
+                {
+                    <li>Welcome, @userManager.GetUserName(User)</li>
+                }
+            </ul>
+        </div>
+    </nav>
+
+    <div class="sidebar" style="margin-top:-20px;">
         @if (controller == "Admin" && action == "AddQuestion")
         {
             <a class="active" asp-controller="Admin" asp-action="AddQuestion">Add Question</a>
@@ -116,7 +132,7 @@
             <a asp-controller="Admin" asp-action="AddUserInRole">Add User In Role</a>
             <a asp-controller="Account" asp-action="Logout">Logout</a>
         }
-        else if(controller == "Admin" && (action == "AddUserInRole" || action == "CreateRole" || action == "EditRole" || action == "AddOrRemoveUser"))
+        else if (controller == "Admin" && (action == "AddUserInRole" || action == "CreateRole" || action == "EditRole" || action == "AddOrRemoveUser"))
         {
             <a asp-controller="Admin" asp-action="AddQuestion">Add Question</a>
             <a asp-controller="Admin" asp-action="ListQuestion">List Question</a>

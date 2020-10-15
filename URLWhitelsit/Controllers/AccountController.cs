@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -27,6 +28,14 @@ namespace URLWhitelsit.Controllers
         [HttpGet]
         public IActionResult Login()
         {
+            LoginViewModel model = new LoginViewModel();
+            if(signInManager.IsSignedIn(User))
+            {
+                if (User.IsInRole("Admin"))
+                    return RedirectToAction("ListQuestion", "Admin");
+                else
+                    return RedirectToAction("Index", "Survey");
+            }
             ViewBag.ProjectInstance = surveyRepository.GetAllProjectInstance();
             return View();
         }
@@ -66,6 +75,14 @@ namespace URLWhitelsit.Controllers
         [HttpGet]
         public IActionResult Register()
         {
+            LoginViewModel model = new LoginViewModel();
+            if (signInManager.IsSignedIn(User))
+            {
+                if (User.IsInRole("Admin"))
+                    return RedirectToAction("ListQuestion", "Admin");
+                else
+                    return RedirectToAction("Index", "Survey");
+            }
             ViewBag.ProjectInstance = surveyRepository.GetAllProjectInstance();
             return View();
         }
@@ -92,6 +109,17 @@ namespace URLWhitelsit.Controllers
             }
             ViewBag.ProjectInstance = surveyRepository.GetAllProjectInstance();
             return View();
+        }
+
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
+
+        public async Task<IActionResult> Logout()
+        {
+            await signInManager.SignOutAsync();
+            return RedirectToAction("Login", "Account");
         }
     }
 }
