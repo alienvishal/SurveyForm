@@ -31,7 +31,7 @@ namespace URLWhitelsit.Controllers
             LoginViewModel model = new LoginViewModel();
             if(signInManager.IsSignedIn(User))
             {
-                if (User.IsInRole("Admin"))
+                if (User.IsInRole("GlobalAdmin") || User.IsInRole("Admin"))
                     return RedirectToAction("ListQuestion", "Admin");
                 else
                     return RedirectToAction("Index", "Survey");
@@ -58,7 +58,7 @@ namespace URLWhitelsit.Controllers
                             return LocalRedirect(returnUrl);
                         else
                         {
-                            if (await userManager.IsInRoleAsync(user.Result, "Admin"))
+                            if (await userManager.IsInRoleAsync(user.Result, "GlobalAdmin") || await userManager.IsInRoleAsync(user.Result, "Admin"))
                                 return RedirectToAction("ListQuestion", "Admin");
                             else
                                 return RedirectToAction("Index", "Survey");
@@ -78,7 +78,7 @@ namespace URLWhitelsit.Controllers
             LoginViewModel model = new LoginViewModel();
             if (signInManager.IsSignedIn(User))
             {
-                if (User.IsInRole("Admin"))
+                if (User.IsInRole("GlobalAdmin") || User.IsInRole("Admin"))
                     return RedirectToAction("ListQuestion", "Admin");
                 else
                     return RedirectToAction("Index", "Survey");

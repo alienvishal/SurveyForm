@@ -10,7 +10,7 @@ using URLWhitelsit.ViewModels;
 
 namespace URLWhitelsit.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "GlobalAdmin, Admin")]
     public class AdminController : Controller
     {
         private readonly ISurveyRepository surveyRepository;
@@ -110,12 +110,14 @@ namespace URLWhitelsit.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "GlobalAdmin")]
         public IActionResult CreateRole()
         {
             return View();
         }
 
         [HttpPost]
+        [Authorize(Roles = "GlobalAdmin")]
         public async Task<IActionResult> CreateRole(CreateRoleViewModel model)
         {
             if (ModelState.IsValid)
