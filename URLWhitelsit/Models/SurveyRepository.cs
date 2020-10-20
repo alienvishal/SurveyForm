@@ -77,5 +77,10 @@ namespace URLWhitelsit.Models
         {
             throw new NotImplementedException();
         }
+
+        public bool IsDateChanged(AddFormSubmitDateViewModel model)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

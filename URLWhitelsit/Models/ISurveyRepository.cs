@@ -16,5 +16,6 @@ namespace URLWhitelsit.Models
         Question UpdatedQuestion(Question question);
         Question DeleteQuestion(int id);
         List<Result> GetAllResult();
+        bool IsDateChanged(AddFormSubmitDateViewModel model);
     }
 }

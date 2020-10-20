@@ -82,7 +82,7 @@
         window.onunload = function () { void (0) }
     </script>
 </head>
-<body>
+<body data-theme="default" data-layout="fluid" data-sidebar="left">
     @{
         string controller = (string)ViewContext.RouteData.Values["controller"];
         string action = (string)ViewContext.RouteData.Values["action"];
@@ -93,57 +93,110 @@
         </div>
     </div>
 
-    <nav class="navbar navbar-default">
-        <div class="container-fluid">
+    <div id="throbber" style="display:none; min-height:120px;"></div>
+    <div id="noty-holder"></div>
+    <div id="wrapper">
+        <!-- Navigation -->
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
-                <a class="navbar-brand" href="#">eXtollo Survey Form</a>
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" asp-action="ListQuestion" asp-controller="Admin">
+                    eXtollo Survey Form
+                </a>
             </div>
-            <ul class="nav navbar-nav navbar-right">
-                @if(signInManager.IsSignedIn(User))
-                {
-                    <li>Welcome, @userManager.GetUserName(User)</li>
+            <!-- Top Menu Items -->
+            <ul class="nav navbar-right top-nav">
+                @if (signInManager.IsSignedIn(User))
+                { 
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"> @userManager.GetUserName(User)<b class="fa fa-angle-down"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#"><i class="fa fa-fw fa-user"></i> Edit Profile</a></li>
+                            <li><a href="#"><i class="fa fa-fw fa-cog"></i> Change Password</a></li>
+                            <li class="divider"></li>
+                            <li><a asp-controller="Account" asp-action="Logout"><i class="fa fa-fw fa-power-off"></i> Logout</a></li>
+                        </ul>
+                    </li>
                 }
             </ul>
-        </div>
-    </nav>
+            <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                @if (User.IsInRole("GlobalAdmin"))
+                {
+                    <ul class="nav navbar-nav side-nav">
+                        <li>
+                            <a asp-controller="Admin" asp-action="AddQuestion">
+                                <i class="fa fa-fw fa-search"></i> ADD QUESTION
+                            </a>
+                        </li>
+                        <li>
+                            <a asp-controller="Admin" asp-action="ListQuestion">
+                                <i class="fa fa-fw fa-star"></i>  LIST QUESTION
+                            </a>
+                        </li>
+                        <li>
+                            <a asp-controller="Admin" asp-action="Result"><i class="fa fa-fw fa-user-plus"></i>  RESULT</a>
+                        </li>
+                        <li>
+                            <a asp-controller="Admin" asp-action="AddUserInRole">
+                                <i class="fa fa-fw fa-paper-plane-o"></i> ADD ROLE AND EDIT
+                            </a>
+                        </li>
+                        <li>
+                            <a asp-controller="Admin" asp-action="AddFormClourseDate">
+                                <i class="fa fa-fw fa fa-question-circle"></i> ADD DATE TO FILL FORM
+                            </a>
+                        </li>
+                    </ul>
+                }
+                else
+                { 
+                    <ul class="nav navbar-nav side-nav">
+                        <li>
+                            <a asp-controller="Admin" asp-action="AddQuestion">
+                                <i class="fa fa-fw fa-search"></i> ADD QUESTION
+                            </a>
+                        </li>
+                        <li>
+                            <a asp-controller="Admin" asp-action="ListQuestion">
+                                <i class="fa fa-fw fa-star"></i>  LIST QUESTION
+                            </a>
+                        </li>
+                        <li>
+                            <a asp-controller="Admin" asp-action="Result"><i class="fa fa-fw fa-user-plus"></i>  RESULT</a>
+                        </li>
+                        <li>
+                            <a asp-controller="Admin" asp-action="AddFormClourseDate">
+                                <i class="fa fa-fw fa fa-question-circle"></i> ADD DATE TO FILL FORM
+                            </a>
+                        </li>
+                    </ul>
+                }
+                </div>
+            <!-- /.navbar-collapse -->
+        </nav>
 
-    <div class="sidebar" style="margin-top:-20px;">
-        @if (controller == "Admin" && action == "AddQuestion")
-        {
-            <a class="active" asp-controller="Admin" asp-action="AddQuestion">Add Question</a>
-            <a asp-controller="Admin" asp-action="ListQuestion">List Question</a>
-            <a asp-controller="Admin" asp-action="Result">Result</a>
-            <a asp-controller="Admin" asp-action="AddUserInRole">Add User In Role</a>
-            <a asp-controller="Account" asp-action="Logout">Logout</a>
-        }
-        else if (controller == "Admin" && (action == "ListQuestion" || action == "Edit"))
-        {
-            <a asp-controller="Admin" asp-action="AddQuestion">Add Question</a>
-            <a class="active" asp-controller="Admin" asp-action="ListQuestion">List Question</a>
-            <a asp-controller="Admin" asp-action="Result">Result</a>
-            <a asp-controller="Admin" asp-action="AddUserInRole">Add User In Role</a>
-            <a asp-controller="Account" asp-action="Logout">Logout</a>
-        }
-        else if (controller == "Admin" && action == "Result")
-        {
-            <a asp-controller="Admin" asp-action="AddQuestion">Add Question</a>
-            <a asp-controller="Admin" asp-action="ListQuestion">List Question</a>
-            <a class="active" asp-controller="Admin" asp-action="Result">Result</a>
-            <a asp-controller="Admin" asp-action="AddUserInRole">Add User In Role</a>
-            <a asp-controller="Account" asp-action="Logout">Logout</a>
-        }
-        else if (controller == "Admin" && (action == "AddUserInRole" || action == "CreateRole" || action == "EditRole" || action == "AddOrRemoveUser"))
-        {
-            <a asp-controller="Admin" asp-action="AddQuestion">Add Question</a>
-            <a asp-controller="Admin" asp-action="ListQuestion">List Question</a>
-            <a asp-controller="Admin" asp-action="Result">Result</a>
-            <a class="active" asp-controller="Admin" asp-action="AddUserInRole">Add User In Role</a>
-            <a asp-controller="Account" asp-action="Logout">Logout</a>
-        }
-    </div>
-    <div class="content">
-        @RenderBody()
-    </div>
+        <div id="page-wrapper">
+            <div class="container-fluid">
+                <!-- Page Heading -->
+                <div class="row" id="main">
+                    <div class="col-sm-12 col-md-12 well" id="content" style="background:white;border:none; box-shadow:none">
+                        @RenderBody()
+                    </div>
+                </div>
+                <!-- /.row -->
+            </div>
+            <!-- /.container-fluid -->
+        </div>
+        <!-- /#page-wrapper -->
+    </div><!-- /#wrapper -->
+
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>

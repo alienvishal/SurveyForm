@@ -6,18 +6,20 @@
 <h2>Login</h2>
 
 
-
-<div class="alert alert-info">
-    <p>Dear eXtollo DSVM and SecVM  Administrators,</p>
-    <br>
-    <p>Welcome to the eXtollo survey.</p>
-    <br>
-    <p>You are requested to provide feedback on the outgoing internet traffic from your eXtollo DSVMs or the eXtollo SecVMs. We kindly ask you to identify until 18.09.2020, which requested URLs are still necessary for your Instance. Invalid URL entries are going to be deleted by end of September 2020.</p>
-    <br>
-    <p>Before the final deletion date, a list of survey results will be shared with you via Mail to give you the chance of double-checking and stopping the deletion of still needed URLs. </p>
-    <br>
-    <p>If you are facing any technical issues related to login or any other functionality, please create a ticket via CISM using the following webticket:  <a href="https://cism-web.es.corpintra.net/cgi-bin/webTickets/webTicket.pl?t=BIG_DATA_N_EXTOLLO_Change"><b>New Incident Ticket</b></a> </p>
-</div>
+@if(TempData["DateModified"] != null)
+{
+    <div class="alert alert-info">
+        <p>Dear eXtollo DSVM and SecVM  Administrators,</p>
+        <br>
+        <p>Welcome to the eXtollo survey.</p>
+        <br>
+        <p>You are requested to provide feedback on the outgoing internet traffic from your eXtollo DSVMs or the eXtollo SecVMs. We kindly ask you to identify until @TempData["DateModified"], which requested URLs are still necessary for your Instance. Invalid URL entries are going to be deleted by end of September 2020.</p>
+        <br>
+        <p>Before the final deletion date, a list of survey results will be shared with you via Mail to give you the chance of double-checking and stopping the deletion of still needed URLs. </p>
+        <br>
+        <p>If you are facing any technical issues related to login or any other functionality, please create a ticket via CISM using the following webticket:  <a href="https://cism-web.es.corpintra.net/cgi-bin/webTickets/webTicket.pl?t=BIG_DATA_N_EXTOLLO_Change"><b>New Incident Ticket</b></a> </p>
+    </div>
+}
 
 <form method="post" asp-antiforgery="true" id="frm_submit">
     <div class="form-horizontal">

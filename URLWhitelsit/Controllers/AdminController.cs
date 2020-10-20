@@ -140,6 +140,7 @@ namespace URLWhitelsit.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "GlobalAdmin")]
         public async Task<IActionResult> EditRole(string id)
         {
             var role = await roleManager.FindByIdAsync(id);
@@ -169,6 +170,7 @@ namespace URLWhitelsit.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "GlobalAdmin")]
         public async Task<IActionResult> EditRole(EditRoleViewModel model, string id)
         {
             if (ModelState.IsValid)
@@ -199,6 +201,7 @@ namespace URLWhitelsit.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "GlobalAdmin")]
         public async Task<IActionResult> AddOrRemoveUser(string roleId)
         {
             var role = await roleManager.FindByIdAsync(roleId);
@@ -235,6 +238,7 @@ namespace URLWhitelsit.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "GlobalAdmin")]
         public async Task<IActionResult> AddOrRemoveUser(List<AddUserInRoleViewModel> model, string roleId)
         {
             var role = await roleManager.FindByIdAsync(roleId);
@@ -272,6 +276,26 @@ namespace URLWhitelsit.Controllers
                 }
             }
             return RedirectToAction("EditRole", "Admin", new { id = roleId });
+        }
+
+        [HttpGet]
+        public ActionResult AddFormClourseDate()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddFormClourseDate(AddFormSubmitDateViewModel model)
+        {
+            if(ModelState.IsValid)
+            {
+                bool isUpdated = surveyRepository.IsDateChanged(model);
+
+                if (isUpdated)
+                    ViewBag.DateModified = "Date has been successfully Updated";
+            }
+            return View(model);
         }
     }
 }
