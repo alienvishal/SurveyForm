@@ -35,3 +35,13 @@ body {
         display: none;
     }
 }
+
+.footer{
+    position:fixed;
+    left:0;
+    bottom:0;
+    width:100%;
+    background-color:silver;
+    color:#fff;
+    text-align:center;
+}

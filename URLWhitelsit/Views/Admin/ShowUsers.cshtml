@@ -1,0 +1,44 @@
+﻿@model IEnumerable<ListUserViewModel>
+
+@{ 
+    ViewBag.Title = "List Users";
+}
+
+<h2 style="margin-top:100px;">List All Users</h2>
+<hr />
+<div asp-validation-summary="All"></div>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>
+                Email ID
+            </th>
+            <th>
+                Project Instance
+            </th>
+            <th>
+                Actions
+            </th>
+        </tr>
+    </thead>
+    @if(Model.Any())
+    {
+        @foreach(var user in Model)
+        {
+            <tr>
+                <td>@user.Email</td>
+                <td>@user.ProjectInstance</td>
+                <td>
+                    <a asp-controller="Admin" asp-action="DeleteUser" class="btn btn-danger" asp-route-id="@user.Id"
+                       onclick="return confirm('Are you sure want to Remove the URL @user.Email ?')">Delete</a>
+                </td>
+            </tr>
+        }
+    }
+    else
+    {
+        <tr>
+            <td colspan="2">No Users are Present At the Moments</td>
+        </tr>
+    }
+</table>

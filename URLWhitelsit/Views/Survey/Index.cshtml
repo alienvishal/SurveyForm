@@ -1,0 +1,71 @@
+﻿@inject SignInManager<Users> signInManager
+@inject UserManager<Users> userManager
+@model  SurveyViewModel
+@{
+    ViewBag.Title = "Survey";
+}
+
+<style>
+    table, th, td {
+        width: 1000px;
+        height: 50px;
+    }
+</style>
+
+@if (signInManager.IsSignedIn(User))
+{
+    <h5 class="text-right" style="font-size:15px;margin-top:100px;">Welcome, @userManager.GetUserName(User)</h5>
+    <h6 class="text-right" style="font-size:15px;"><a asp-action="Logout" asp-controller="Account">Log Out</a></h6>
+}
+
+    <form method="post" asp-antiforgery="true">
+        <table>
+            <tr class="alert alert-info">
+                <td style="width:11%"><strong>Please Note:</strong></td>
+                <td>
+                    Dear eXtollo Instance Administrators,
+                    <br />
+                    <br />
+                    In order to enable outgoing internet traffic from your eXtollo Data Science Virtual Machine (DSVM) or the eXtollo Secure Virtual Machine (SecVM) (e.g. for downloading packages from library like nuget.org or pypi.org) we need to whitelisting the URL entries on the eXtollo internet proxy.
+                    <br />
+                    <br />
+                    To ensure that all whitelisting URL entries are still necessary and in use, a regular review of the list with our Instance Administrators once a year is necessary. Doing so, we have set up a survey identifying which requested URLs are still valid.
+                    <br />
+                    <br />You may find the below list of whitelisted URL's. Kindly choose if you would like to <strong>'Keep' </strong> or <strong> 'Discard' </strong> each URL.
+                    <br />By default, the <strong>Discard</strong> option is pre-selected.
+                </td>
+            </tr>
+        </table>
+        <br /><br /><br />
+        <table cellpadding="30">
+            @if (Model.Questions.Any())
+            {
+                int count = 1;
+                foreach (var question in Model.Questions)
+                {
+                    <tr>
+                        <td>
+                            @count : @question.Q_Text
+                        </td>
+                        <td>
+                            <label class="btn btn-primary">
+                                <input id="Selected_@count" name="Selected_@count" type="radio" value="@Model.RadioButton[0]" />@Model.RadioButton[0]
+                            </label>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <label class="btn btn-danger">
+                                <input checked="checked" id="Selected_@count" name="Selected_@count" type="radio" value="@Model.RadioButton[1]" /> @Model.RadioButton[1]
+                            </label>
+                        </td>
+                    </tr>
+                    count++;
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="2">No Question has been Step Up</td>
+                </tr>
+            }
+        </table>
+        <input type="submit" value="Submit" style="float:right;" class="new-btn" onclick="return confirm ('You are about to submit your input and will not be able to edit after submission. Are you sure?' )" />
+    </form>

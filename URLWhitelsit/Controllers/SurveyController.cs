@@ -5,14 +5,25 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using URLWhitelsit.Models;
+using URLWhitelsit.ViewModels;
 
 namespace URLWhitelsit.Controllers
 {
     public class SurveyController : Controller
     {
-        public IActionResult Survey()
+        private readonly ISurveyRepository repository;
+
+        public SurveyController(ISurveyRepository repository)
         {
-            return View();
+            this.repository = repository;
+        }
+        public IActionResult Index()
+        {
+            SurveyViewModel model = new SurveyViewModel
+            {
+                Questions = repository.GetAllQuestion()
+            };
+            return View(model);
         }
     }
 }

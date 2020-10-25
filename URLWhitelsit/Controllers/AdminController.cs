@@ -297,5 +297,41 @@ namespace URLWhitelsit.Controllers
             }
             return View(model);
         }
+
+        [HttpGet]
+        public IActionResult ShowUsers()
+        {
+            return View(surveyRepository.ListUsers());
+        }
+
+        public async Task<IActionResult> DeleteUser(string id)
+        {
+            var users = await userManager.FindByIdAsync(id);
+
+            if(users != null)
+            {
+                var roleForUser = await userManager.GetRolesAsync(users);
+                
+                if(roleForUser.Count > 0)
+                {
+                    foreach(var item in roleForUser.ToList())
+                    {
+                        await userManager.RemoveFromRoleAsync(users, item);
+                    }
+                }
+
+                var result = await userManager.DeleteAsync(users);
+                if(result.Succeeded)
+                {
+                    return RedirectToAction("ShowUsers", "Admin");
+                }
+
+                foreach(var err in result.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, err.Description);
+                }
+            }
+            return View();
+        }
     }
 }

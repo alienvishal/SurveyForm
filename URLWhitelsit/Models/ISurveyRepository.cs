@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -17,5 +18,6 @@ namespace URLWhitelsit.Models
         Question DeleteQuestion(int id);
         List<Result> GetAllResult();
         bool IsDateChanged(AddFormSubmitDateViewModel model);
+        List<ListUserViewModel> ListUsers();
     }
 }

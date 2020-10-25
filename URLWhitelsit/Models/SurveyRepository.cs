@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -82,5 +83,34 @@ namespace URLWhitelsit.Models
         {
             throw new NotImplementedException();
         }
+
+        public List<ListUserViewModel> ListUsers()
+        {
+            var listUsers = (from user in surveyDBContext.Users
+                             join project in surveyDBContext.ProjectInstances
+                             on user.project_Id equals project.Project_Id
+                             select new
+                             {
+                                 Name = user.Email,
+                                 Project = project.ProjectName,
+                                 UserId = user.Id
+                             }).ToList();
+
+            var model = new List<ListUserViewModel>();
+            foreach(var user in listUsers)
+            {
+                ListUserViewModel listUserViewModel = new ListUserViewModel
+                {
+                    Email = user.Name,
+                    ProjectInstance = user.Project,
+                    Id = user.UserId
+                };
+
+                model.Add(listUserViewModel);
+            }
+
+            return model;
+        }
+        
     }
 }
