@@ -47,4 +47,13 @@
             $('.fa.fa-spinner.fa-spin').show();
         })
     </script>
+
+    @if (ViewBag.Success != null)
+    {
+        <script>
+            toastr.options.progressBar = true
+            toastr.options.onHidden = function () { window.location.href = '@Url.Action("Login", "Account")' }
+            toastr.success("@ViewBag.Success")
+        </script>
+    }
 }

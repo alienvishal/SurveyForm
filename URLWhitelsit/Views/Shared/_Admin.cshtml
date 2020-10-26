@@ -10,6 +10,7 @@
     <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/chosen/1.1.0/chosen.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="~/css/Admin.css" />
+    <link href="~/lib/toastr/toastr.css" rel="stylesheet" />
     <style>
         div#loader_screen {
             background: #fff;
@@ -116,6 +117,7 @@
             <a asp-action="ListQuestion" asp-controller="Admin"><i class="fa fa-cogs"></i><span>List Question</span></a>
             <a asp-action="Result" asp-controller="Admin"><i class="fa fa-table"></i><span>Result</span></a>
             <a asp-action="AddFormClourseDate" asp-controller="Admin"><i class="fa fa-info-circle"></i><span>Add Date to Fill Form</span></a>
+            <a asp-action="ShowUsers" asp-controller="Admin"><i class="fa fa-bars"></i><span>List Users</span></a>
         }
     </div>
     <div class="content">
@@ -155,6 +157,7 @@
     </environment>
     <script src="~/js/site.min.js" asp-append-version="true"></script>
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/chosen/1.1.0/chosen.jquery.min.js"></script>
+    <script src="~/lib/toastr/toastr.min.js"></script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

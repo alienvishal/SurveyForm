@@ -17,5 +17,6 @@ namespace URLWhitelsit.Models
         [ForeignKey("Users")]
         public string Id { get; set; }
         public virtual Users Users { get; set; }
+        public string SelectedAnswer { get; set; }
     }
 }

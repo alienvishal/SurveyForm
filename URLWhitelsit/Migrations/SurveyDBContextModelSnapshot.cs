@@ -167,6 +167,8 @@ namespace URLWhitelsit.Migrations
 
                     b.Property<int>("Q_Id");
 
+                    b.Property<string>("SelectedAnswer");
+
                     b.HasKey("Res_Id");
 
                     b.HasIndex("Id");

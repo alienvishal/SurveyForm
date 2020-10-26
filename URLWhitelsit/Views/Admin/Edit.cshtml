@@ -35,4 +35,13 @@
             $('.fa.fa-spinner.fa-spin').show();
         })
     </script>
+
+    @if(ViewBag.QuestionEdited != null)
+    {
+        <script>
+            toastr.options.progressBar = true;
+            toastr.options.onHidden = function () { window.location.href = '@Url.Action("ListQuestion", "Admin")' }
+            toastr.success("@ViewBag.QuestionEdited")
+        </script>
+    }
 }

@@ -38,4 +38,14 @@
             $('.fa.fa-spinner.fa-spin').show();
         })
     </script>
+
+
+    @if (ViewBag.AddOrRemoveUser != null)
+    {
+        <script>
+            toastr.options.progressBar = true;
+            toastr.options.onHidden = function () { window.location.href = '@Url.Action("EditRole", "Admin", new { id = roleId})' }
+            toastr.success("@ViewBag.AddOrRemoveUser")
+        </script>
+    }
 }

@@ -10,8 +10,8 @@ using URLWhitelsit.Models;
 namespace URLWhitelsit.Migrations
 {
     [DbContext(typeof(SurveyDBContext))]
-    [Migration("20201016202940_RemovedColumnFromResult")]
-    partial class RemovedColumnFromResult
+    [Migration("20201026102127_ChangedInResultTable")]
+    partial class ChangedInResultTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -168,6 +168,8 @@ namespace URLWhitelsit.Migrations
                     b.Property<int>("Project_Id");
 
                     b.Property<int>("Q_Id");
+
+                    b.Property<string>("SelectedAnswer");
 
                     b.HasKey("Res_Id");
 

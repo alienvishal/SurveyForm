@@ -19,5 +19,6 @@ namespace URLWhitelsit.Models
         List<Result> GetAllResult();
         bool IsDateChanged(AddFormSubmitDateViewModel model);
         List<ListUserViewModel> ListUsers();
+        bool IsSurveyAdded(SurveyViewModel model);
     }
 }

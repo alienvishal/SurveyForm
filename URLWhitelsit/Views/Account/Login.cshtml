@@ -6,7 +6,7 @@
 <h2>Login</h2>
 
 
-@if(TempData["DateModified"] != null)
+@if (TempData["DateModified"] != null)
 {
     <div class="alert alert-info">
         <p>Dear eXtollo DSVM and SecVM  Administrators,</p>
@@ -25,7 +25,7 @@
     <div class="form-horizontal">
         <hr />
         <div asp-validation-summary="All" class="text-danger"></div>
-        @if(ViewBag.Message != null)
+        @if (ViewBag.Message != null)
         {
             <div class="alert alert-success" role="alert">
                 <strong>Success !! </strong> @ViewBag.Message

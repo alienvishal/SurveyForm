@@ -88,9 +88,8 @@ namespace URLWhitelsit.Controllers
                 }
 
                 res.Q_Text = model.Q_Text;
-
                 surveyRepository.UpdatedQuestion(res);
-                return RedirectToAction("ListQuestion", "Admin");
+                ViewBag.QuestionEdited = "The URL has been Successfully edited";
             }
             return View(model);
         }
@@ -127,7 +126,7 @@ namespace URLWhitelsit.Controllers
 
                 if (res.Succeeded)
                 {
-                    return RedirectToAction("AddUserInRole", "Admin");
+                    ViewBag.RoleCreated = "Role has been Successfully Created";
                 }
 
                 foreach (var err in res.Errors)
@@ -188,7 +187,7 @@ namespace URLWhitelsit.Controllers
 
                 if (res.Succeeded)
                 {
-                    return RedirectToAction("AddUserInRole", "Admin");
+                    ViewBag.RoleEdited = "The Role has been Successfully Updated";
                 }
 
                 foreach(var err in res.Errors)
@@ -272,7 +271,7 @@ namespace URLWhitelsit.Controllers
                     if (i < (model.Count - 1))
                         continue;
                     else
-                        return RedirectToAction("EditRole", "Admin", new { id = roleId});
+                        ViewBag.AddOrRemoveUser = "The User in Role has been Successfully Updated";
                 }
             }
             return RedirectToAction("EditRole", "Admin", new { id = roleId });
@@ -323,6 +322,7 @@ namespace URLWhitelsit.Controllers
                 var result = await userManager.DeleteAsync(users);
                 if(result.Succeeded)
                 {
+                    ViewBag.DeletedUser = "The User " + users.Email + " has been successfully deleted";
                     return RedirectToAction("ShowUsers", "Admin");
                 }
 

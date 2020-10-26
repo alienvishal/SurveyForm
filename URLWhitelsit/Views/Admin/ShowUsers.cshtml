@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<ListUserViewModel>
 
-@{ 
+@{
     ViewBag.Title = "List Users";
 }
 
@@ -21,9 +21,9 @@
             </th>
         </tr>
     </thead>
-    @if(Model.Any())
+    @if (Model.Any())
     {
-        @foreach(var user in Model)
+        @foreach (var user in Model)
         {
             <tr>
                 <td>@user.Email</td>
@@ -42,3 +42,16 @@
         </tr>
     }
 </table>
+
+
+@section Scripts{
+ 
+    @if (ViewBag.DeletedUser != null)
+    {
+        <script>
+            toastr.options.progressBar = true;
+            toastr.options.onHidden = function () { window.location.href = '@Url.Action("ShowUsers", "Admin")' }
+            toastr.success("@ViewBag.DeletedUser")
+        </script>
+    }
+}

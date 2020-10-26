@@ -29,3 +29,13 @@
     }
 </table>
  
+@section Scripts
+{
+    @if(ViewBag.DeletedURL != null)
+    {
+        <script>
+            toastr.options.progressBar = true;
+            toastr.success("@ViewBag.DeletedURL");
+        </script>
+    }
+}

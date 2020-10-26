@@ -11,5 +11,8 @@ namespace URLWhitelsit.ViewModels
     {
         public List<Question> Questions { get; set; }
         public string[] RadioButton = new[] { "Keep", "Discard" };
+        public string UserId { get; set; }
+        public int ProjectId { get; set; }
+        public string[] SelectedAnswer { get; set; }
     }
 }

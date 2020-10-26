@@ -111,6 +111,33 @@ namespace URLWhitelsit.Models
 
             return model;
         }
+
         
+        public bool IsSurveyAdded(SurveyViewModel model)
+        {
+            int flag = 0;
+            for (int i = 0; i < model.Questions.Count; i++)
+            {
+                Result result = new Result
+                {
+                    Id = model.UserId,
+                    Project_Id = model.ProjectId,
+                    Q_Id = model.Questions[i].Q_Id,
+                    SelectedAnswer = model.SelectedAnswer[i]
+                };
+                var res = surveyDBContext.Results.Add(result);
+                surveyDBContext.SaveChanges();
+
+                if (res == null)
+                    flag = 0;
+                else
+                    flag = 1;
+            }
+
+            if (flag == 0)
+                return false;
+
+            return true;
+        }
     }
 }

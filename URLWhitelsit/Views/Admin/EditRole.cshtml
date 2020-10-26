@@ -37,9 +37,9 @@
             Users In the Role
         </div>
         <div class="panel-body">
-            @if(Model.Users.Any())
+            @if (Model.Users.Any())
             {
-                foreach(var user in Model.Users)
+                foreach (var user in Model.Users)
                 {
                     <h5 class="panel-title">@user</h5>
                 }
@@ -62,4 +62,13 @@
             $('.fa.fa-spinner.fa-spin').show();
         })
     </script>
+
+        @if (ViewBag.RoleEdited != null)
+        {
+            <script>
+            toastr.options.progressBar = true;
+            toastr.options.onHidden = function () { window.location.href = '@Url.Action("AddUserInRole", "Admin")' }
+            toastr.success("@ViewBag.RoleEdited")
+            </script>
+        }
 }

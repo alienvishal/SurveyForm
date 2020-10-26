@@ -18,3 +18,16 @@
         </form>
     </div>
 </div>
+
+@section Scripts{
+
+    @if(ViewBag.RoleCreated != null)
+    {
+        <script>
+            toastr.options.progressBar = true;
+            toastr.options.onHidden = function () { window.location.href = '@Url.Action("AddUserInRole", "Admin")' }
+            toastr.success("@ViewBag.RoleCreated")
+        </script>
+    }
+
+}

@@ -61,7 +61,7 @@ namespace URLWhitelsit.Controllers
                             if (await userManager.IsInRoleAsync(user.Result, "GlobalAdmin") || await userManager.IsInRoleAsync(user.Result, "Admin"))
                                 return RedirectToAction("ListQuestion", "Admin");
                             else
-                                return RedirectToAction("Index", "Survey");
+                                return RedirectToAction("Index", "Survey", new { id = user.Result.Id, projectId = user.Result.project_Id});
                         }
                     }
                 }
@@ -98,8 +98,7 @@ namespace URLWhitelsit.Controllers
 
                 if(result.Succeeded)
                 {
-                    ViewBag.Message = "Thank you for Registering with us :)";
-                    return RedirectToAction("Login", "Account");
+                    ViewBag.Success = "You have been successfully Registered";
                 }
 
                 foreach(var err in result.Errors)

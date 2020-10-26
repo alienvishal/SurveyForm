@@ -131,6 +131,22 @@ label #sidebar_btn:hover{
     margin-left:60px;
 }
 
+#check:checked ~ .footer{
+    margin-left:60px;
+}
+
 #check{
     display:none;
+}
+
+.footer {
+    margin-left:250px;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: silver;
+    color: #fff;
+    text-align: center;
+    transition:0.5s;
 }
