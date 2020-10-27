@@ -16,9 +16,10 @@ namespace URLWhitelsit.Models
         Question GetQuestionById(int id);
         Question UpdatedQuestion(Question question);
         Question DeleteQuestion(int id);
-        List<Result> GetAllResult();
+        List<ListUserViewModel> GetAllResult();
         bool IsDateChanged(AddFormSubmitDateViewModel model);
         List<ListUserViewModel> ListUsers();
         bool IsSurveyAdded(SurveyViewModel model);
+        bool IsDeleteResult(string userId);
     }
 }

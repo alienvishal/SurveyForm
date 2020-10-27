@@ -318,7 +318,8 @@ namespace URLWhitelsit.Controllers
                         await userManager.RemoveFromRoleAsync(users, item);
                     }
                 }
-
+                surveyRepository.IsDeleteResult(id);
+                
                 var result = await userManager.DeleteAsync(users);
                 if(result.Succeeded)
                 {
@@ -332,6 +333,12 @@ namespace URLWhitelsit.Controllers
                 }
             }
             return View();
+        }
+
+        [HttpGet]
+        public IActionResult Result()
+        {
+            return View(surveyRepository.GetAllResult());
         }
     }
 }

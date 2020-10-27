@@ -74,9 +74,34 @@ namespace URLWhitelsit.Models
             return question;
         }
 
-        public List<Result> GetAllResult()
+        public List<ListUserViewModel> GetAllResult()
         {
-            throw new NotImplementedException();
+            var result = (from user in surveyDBContext.Users
+                          join res in surveyDBContext.Results
+                          on user.Id equals res.Id
+                          select new
+                          {
+                              Name = user.Email,
+                              Keep = surveyDBContext.Results
+                                     .Where(x => x.SelectedAnswer == "Keep").Count(),
+                              Discard = surveyDBContext.Results
+                                        .Where(x => x.SelectedAnswer == "Discard").Count()
+                          }).ToList();
+
+            var model = new List<ListUserViewModel>();
+            foreach(var res in result)
+            {
+                ListUserViewModel surveyViewModel = new ListUserViewModel
+                {
+                    Email = res.Name,
+                    Keep = res.Keep,
+                    Discard = res.Discard
+                };
+
+                model.Add(surveyViewModel);
+            }
+
+            return model;
         }
 
         public bool IsDateChanged(AddFormSubmitDateViewModel model)
@@ -138,6 +163,22 @@ namespace URLWhitelsit.Models
                 return false;
 
             return true;
+        }
+
+        public bool IsDeleteResult(string userId)
+        {
+            var result = surveyDBContext.Results
+                            .Where(x => x.Id == userId).ToList();
+            if (result != null)
+            {
+                foreach (var res in result)
+                {
+                    surveyDBContext.Results.Remove(res);
+                    surveyDBContext.SaveChanges();
+                }
+                return true;
+            }
+            return false;
         }
     }
 }

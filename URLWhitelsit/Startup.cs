@@ -33,7 +33,7 @@ namespace URLWhitelsit
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-
+            
             services.AddDbContextPool<SurveyDBContext>(options => {
                 options.UseSqlServer(Configuration.GetConnectionString("Survey"));
             });
@@ -43,6 +43,9 @@ namespace URLWhitelsit
             services.AddIdentity<Users, IdentityRole>()
                 .AddEntityFrameworkStores<SurveyDBContext>();
 
+            services.Configure<IdentityOptions>(option => {
+                option.User.RequireUniqueEmail = false;
+            });
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             
         }
