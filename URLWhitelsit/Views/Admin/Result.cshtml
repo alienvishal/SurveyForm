@@ -8,7 +8,7 @@
 <table class="table table-striped">
     <thead>
         <tr>
-            <th>Email ID</th>
+            <th>URL</th>
             <th>Keep</th>
             <th>Discard</th>
         </tr>
@@ -16,13 +16,32 @@
     <tbody>
         @if (Model.Any())
         {
-            foreach (var res in Model)
+            int keep = 0;
+            int discard = 0;
+            @foreach (var res in Model)
             {
                 <tr>
-                    <td>@res.Email</td>
-                    <td>@res.Keep</td>
-                    <td>@res.Discard</td>
+                    <td>@res.QText</td>
+                    @for (int i = 0; i < res.SelectedAnswer.Count; i++)
+                    {
+                        if (res.SelectedAnswer[i] == "Keep")
+                        {
+                            keep++;
+                        }
+
+                        if (res.SelectedAnswer[i] == "Discard")
+                        {
+                            discard++;
+                        }
+                    }
+                    <td>@keep</td>
+                    <td>@discard</td>
+                    @{
+                        keep = 0;
+                        discard = 0;
+                    }
                 </tr>
+                
             }
         }
         else

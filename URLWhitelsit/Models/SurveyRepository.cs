@@ -76,16 +76,16 @@ namespace URLWhitelsit.Models
 
         public List<ListUserViewModel> GetAllResult()
         {
-            var result = (from user in surveyDBContext.Users
+            var result = (from qes in surveyDBContext.Questions
                           join res in surveyDBContext.Results
-                          on user.Id equals res.Id
+                          on qes.Q_Id equals res.Q_Id
+                          group new {res.SelectedAnswer}
+                          by new {qes.Q_Text} into grp
+                          orderby grp.Key.Q_Text
                           select new
                           {
-                              Name = user.Email,
-                              Keep = surveyDBContext.Results
-                                     .Where(x => x.SelectedAnswer == "Keep").Count(),
-                              Discard = surveyDBContext.Results
-                                        .Where(x => x.SelectedAnswer == "Discard").Count()
+                              QText = grp.Key.Q_Text,
+                              Answer = grp.Select(x=>x.SelectedAnswer)
                           }).ToList();
 
             var model = new List<ListUserViewModel>();
@@ -93,9 +93,8 @@ namespace URLWhitelsit.Models
             {
                 ListUserViewModel surveyViewModel = new ListUserViewModel
                 {
-                    Email = res.Name,
-                    Keep = res.Keep,
-                    Discard = res.Discard
+                    QText = res.QText,
+                    SelectedAnswer = res.Answer.ToList()
                 };
 
                 model.Add(surveyViewModel);

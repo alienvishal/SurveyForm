@@ -11,7 +11,7 @@ namespace URLWhitelsit.ViewModels
         public string Email { get; set; }
         public string ProjectInstance { get; set; }
         public string Id { get; set; }
-        public int Keep { get; set; }
-        public int Discard { get; set; }
+        public List<string> SelectedAnswer { get; set; }
+        public string QText { get; set; }
     }
 }
